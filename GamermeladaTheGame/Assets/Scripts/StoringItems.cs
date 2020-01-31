@@ -10,6 +10,7 @@ public class StoringItems : MonoBehaviour
 
     public int max_carryin_items = 8;
     int object_counter = 0;
+    public float extra_distance = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,16 +28,25 @@ public class StoringItems : MonoBehaviour
         }
     }
 
+    void lose_items(int number)
+    {
+        object_counter -= number;
+        if (object_counter < 0)
+            object_counter = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (object_counter == 0)
             return;
 
-        carrying_objects[0].transform.position = transform.position - Vector3.Scale(transform.forward, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f);
+        carrying_objects[0].transform.position = transform.position - Vector3.Scale(transform.forward, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f* extra_distance);
         for(int i = 1; i < object_counter; ++i)
         {
-            carrying_objects[i].transform.position = carrying_objects[i-1].transform.position - Vector3.Scale(carrying_objects[i-1].transform.forward, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f);
+            Vector3 vec = carrying_objects[i - 1].transform.position - carrying_objects[i].transform.position;
+            vec.Normalize();
+            carrying_objects[i].transform.position = carrying_objects[i-1].transform.position - Vector3.Scale(vec, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f*extra_distance);
         }
     }
 
