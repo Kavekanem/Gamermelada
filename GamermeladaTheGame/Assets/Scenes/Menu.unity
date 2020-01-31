@@ -1265,6 +1265,8 @@ MonoBehaviour:
   main_menu: {fileID: 125084372}
   options: {fileID: 1569904434}
   resolutions: {fileID: 754476962}
+  mastervolume: {fileID: 0}
+  init_level: 
 --- !u!1 &1081651343
 GameObject:
   m_ObjectHideFlags: 0
@@ -2405,7 +2407,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &1406878370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2795,7 +2797,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &1835771170
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,11 +9,14 @@ public class MenuFunctions : MonoBehaviour
     public GameObject main_menu;
     public GameObject options;
     public GameObject resolutions;
+    public AudioSource mastervolume;
+
+    public string init_level = "";
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        mastervolume.volume = PlayerPrefs.GetFloat("MasterVolume");
     }
 
     // Update is called once per frame
@@ -78,8 +81,9 @@ public class MenuFunctions : MonoBehaviour
         Screen.SetResolution(640, 480, false);
     }
 
-    public void ChangeVolume()
+    public void ChangeVolume(float vol)
     {
-
+        PlayerPrefs.SetFloat("MasterVolume", vol);
+        mastervolume.volume = vol;
     }
 }
