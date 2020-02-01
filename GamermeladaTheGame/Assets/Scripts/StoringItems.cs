@@ -23,14 +23,18 @@ public class StoringItems : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-       //object_counter = 0;
+       object_counter = 0;
     }
 
-    void lose_items(int number)
+    public void leaveitem(GameObject obj)
     {
-        object_counter -= number;
-        if (object_counter < 0)
-            object_counter = 0;
+        for(int i = 0; i < object_counter; ++i)
+        {
+            if(obj.GetInstanceID() == carrying_objects[i].GetInstanceID())
+            {
+                object_counter = i;
+            }
+        }
     }
 
     // Update is called once per frame
