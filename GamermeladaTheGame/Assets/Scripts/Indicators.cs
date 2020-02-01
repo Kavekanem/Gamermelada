@@ -11,6 +11,7 @@ public class Indicators : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        maincamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -26,6 +27,12 @@ public class Indicators : MonoBehaviour
             if(subs.x >= halfScreenSize.x && subs.y >= halfScreenSize.y)
             {
                 //show indicators at place
+                float x = (scrtocam.x * point_des.y - scrtocam.y * point_des.x) * (-Screen.currentResolution.width) / ((scrtocam.x - point_des.x)*(-Screen.currentResolution.height) -(scrtocam.y - point_des.y)*(-Screen.currentResolution.width));
+                float y = (scrtocam.x * point_des.y - scrtocam.y * point_des.x) * (-Screen.currentResolution.height) / ((scrtocam.x - point_des.x) * (-Screen.currentResolution.height) - (scrtocam.y - point_des.y) * (-Screen.currentResolution.width));
+
+                RectTransform rectt = indicators[i].GetComponent<RectTransform>();
+                rectt.position.Set(x, y, 1);
+                indicators[i].SetActive(true);
             }
             else
             {
