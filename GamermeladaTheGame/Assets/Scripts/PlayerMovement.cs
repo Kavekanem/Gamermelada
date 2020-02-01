@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Camera.transform.position = transform.position + CameraInitialOffset;
-        ParticleCamera.transform.position = transform.position + ParticleCameraInitialOffset;
+        //ParticleCamera.transform.position = transform.position + ParticleCameraInitialOffset;
         Particles.transform.position = transform.position + ParticlesInitialOffset;
     }
 
