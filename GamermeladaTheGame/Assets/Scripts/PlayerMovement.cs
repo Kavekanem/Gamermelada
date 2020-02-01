@@ -7,9 +7,13 @@ public class PlayerMovement : MonoBehaviour
     //Components "attached"
     public GameObject Mesh = null;
     public GameObject Camera = null;
+    public GameObject ParticleCamera = null;
+    public GameObject Particles = null;
 
     private Vector3 MeshInitialOffset;
     private Vector3 CameraInitialOffset;
+    private Vector3 ParticleCameraInitialOffset;
+    private Vector3 ParticlesInitialOffset;
 
     // Forward movement variables
     public float AccelerationForce = 0.0f;
@@ -44,6 +48,9 @@ public class PlayerMovement : MonoBehaviour
     {
         MeshInitialOffset = Mesh.transform.position - transform.position;
         CameraInitialOffset = Camera.transform.position - transform.position;
+        ParticleCameraInitialOffset = ParticleCamera.transform.position - transform.position;
+        ParticlesInitialOffset = Particles.transform.position - transform.position;
+
         PlaneInitialOffsetY = WaterPlane.transform.position.y - transform.position.y;
 
         OwnerRB = GetComponent<Rigidbody>();
@@ -59,6 +66,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Camera.transform.position = transform.position + CameraInitialOffset;
+        ParticleCamera.transform.position = transform.position + ParticleCameraInitialOffset;
+        Particles.transform.position = transform.position + ParticlesInitialOffset;
     }
 
     void ForwardMovement()
