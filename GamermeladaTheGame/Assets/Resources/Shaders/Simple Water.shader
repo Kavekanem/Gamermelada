@@ -2,8 +2,8 @@
 {
 	Properties
 	{
-		_Color("Tint", Color) = (1, 1, 1, .5)
-		_FoamC("Foam", Color) = (1, 1, 1, .5)
+		_Color("Tint", Color) = (1, 1, 1, 1)
+		_FoamC("Foam", Color) = (1, 1, 1, 1)
 		_MainTex("Main Texture", 2D) = "white" {}
 		_MaskInt("RenderTexture Mask", 2D) = "white" {}
 		_TextureDistort("Texture Wobble", range(0,1)) = 0.1
@@ -18,7 +18,7 @@
 		{
 			Tags { "RenderType" = "Opaque"  "Queue" = "Transparent" }
 			LOD 100
-			Blend OneMinusDstColor One
+			Blend SrcAlpha OneMinusSrcAlpha
 			Cull Off
 
 			GrabPass{
@@ -104,7 +104,7 @@
 				   ripples = step(0.99, ripples * 3);
 				   float4 ripplesColored = ripples * _FoamC;
 
-				   return   saturate(col + ripplesColored);
+				   return saturate(col + ripplesColored);
 				}
 				ENDCG
 			}
