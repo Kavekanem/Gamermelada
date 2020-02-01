@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     //Components "attached"
     public GameObject Mesh = null;
     public GameObject Particles = null;
-    public GameObject RenderCamera = null;
+    public GameObject ParentParticles = null;
     public GameObject Explosion = null;
     public GameObject ParticleCamera = null;
     public CameraMovement CameraMovement = null;
@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 MeshInitialOffset;
     private Vector3 ParticlesInitialOffset;
     private Vector3 ExplosionInitialOffset;
+    private Vector3 ParticleCameraInitialOffset;
 
     // Forward movement variables
     public float AccelerationForce = 0.0f;
@@ -59,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         MeshInitialOffset = Mesh.transform.position - transform.position;
         ParticlesInitialOffset = Particles.transform.position - transform.position;
         ExplosionInitialOffset = Explosion.transform.position - transform.position;
+        ParticleCameraInitialOffset = ParticleCamera.transform.position - transform.position;
 
         PlaneInitialOffsetY = WaterPlane.transform.position.y - transform.position.y;
 
@@ -74,11 +76,14 @@ public class PlayerMovement : MonoBehaviour
             Mesh.transform.eulerAngles = new Vector3(Mesh.transform.eulerAngles.x, transform.eulerAngles.y + 180.0f, Mesh.transform.eulerAngles.z);
         }
 
-        Particles.transform.position = transform.position + ParticlesInitialOffset;
+        ParticleCamera.transform.position = transform.position + ParticleCameraInitialOffset;
+        //Particles.transform.position = transform.position + ParticlesInitialOffset;
+
+        //Particles.transform.position = transform.position + ParticlesInitialOffset;
 
         ParticleCamera.transform.rotation = transform.rotation;
 
-        RenderCamera.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
+        ParentParticles.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
         Explosion.transform.position = transform.position + ExplosionInitialOffset;
     }
 
