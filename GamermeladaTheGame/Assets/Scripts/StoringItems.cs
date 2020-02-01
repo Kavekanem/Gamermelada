@@ -50,6 +50,8 @@ public class StoringItems : MonoBehaviour
             Vector3 vec = carrying_objects[i - 1].transform.position - carrying_objects[i].transform.position;
             vec.Normalize();
             carrying_objects[i].transform.position = carrying_objects[i-1].transform.position - Vector3.Scale(vec, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f*extra_distance);
+            Rigidbody r = carrying_objects[i].GetComponent<Rigidbody>();
+          //  r.velocity = r.velocity + vec;
         }
     }
 
