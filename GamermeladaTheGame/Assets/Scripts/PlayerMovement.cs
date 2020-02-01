@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Camera = null;
     public GameObject ParticleCamera = null;
     public GameObject Particles = null;
+    public GameObject RenderCamera = null;
 
     private Vector3 MeshInitialOffset;
     private Vector3 CameraInitialOffset;
@@ -68,6 +69,10 @@ public class PlayerMovement : MonoBehaviour
         Camera.transform.position = transform.position + CameraInitialOffset;
         ParticleCamera.transform.position = transform.position + ParticleCameraInitialOffset;
         Particles.transform.position = transform.position + ParticlesInitialOffset;
+
+        ParticleCamera.transform.rotation = transform.rotation;
+
+        RenderCamera.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
     }
 
     void ForwardMovement()
