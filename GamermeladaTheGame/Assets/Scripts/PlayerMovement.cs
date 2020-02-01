@@ -9,7 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Particles = null;
     public GameObject RenderCamera = null;
     public GameObject Explosion = null;
+    public GameObject ParticleCamera = null;
     public CameraMovement CameraMovement = null;
+
 
     private Vector3 MeshInitialOffset;
     private Vector3 ParticlesInitialOffset;
