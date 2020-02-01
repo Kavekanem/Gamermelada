@@ -48,6 +48,9 @@ public class StoringItems : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (object_counter == 0)
+            return;
+
         Vector3 vec1 = transform.position - carrying_objects[0].transform.position;
         vec1.Normalize();
         carrying_objects[0].transform.position = transform.position - Vector3.Scale(vec1, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f* extra_distance);
