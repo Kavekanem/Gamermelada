@@ -16,6 +16,8 @@ public class StoringItems : MonoBehaviour
 
     [HideInInspector]
     public Rigidbody own_rb;
+
+    public float velocity_offset = 10.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,14 @@ public class StoringItems : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Vector3 vec1 = transform.position - carrying_objects[0].transform.position;
+        vec1.Normalize();
+        carrying_objects[0].transform.position = transform.position - Vector3.Scale(vec1, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f* extra_distance);
+        for(int i = 1; i < object_counter; ++i)
+        {
+            Vector3 vec = carrying_objects[i - 1].transform.position - carrying_objects[i].transform.position;
+            vec.Normalize();
+            carrying_objects[i].transform.position = carrying_objects[i-1].transform.position - Vector3.Scale(vec, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f*extra_distance);
+        }
     }
 }

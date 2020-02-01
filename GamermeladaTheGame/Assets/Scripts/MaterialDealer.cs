@@ -37,12 +37,12 @@ public class MaterialDealer : MonoBehaviour
             if (component.object_counter != 0)
             {
                 component.carrying_objects[component.object_counter].transform.position = component.carrying_objects[component.object_counter - 1].transform.position - component.carrying_objects[component.object_counter - 1].transform.forward;
-                component.carrying_objects[component.object_counter].GetComponent<SpringJoint>().connectedBody = component.carrying_objects[component.object_counter-1].GetComponent<Rigidbody>();
+                //component.carrying_objects[component.object_counter].GetComponent<SpringJoint>().connectedBody = component.carrying_objects[component.object_counter-1].GetComponent<Rigidbody>();
             }
             else
             {
                 component.carrying_objects[component.object_counter].transform.position = component.gameObject.transform.position - component.gameObject.transform.forward;
-                component.carrying_objects[component.object_counter].GetComponent<SpringJoint>().connectedBody = component.own_rb;
+                //component.carrying_objects[component.object_counter].GetComponent<SpringJoint>().connectedBody = component.own_rb;
             }
 
 
