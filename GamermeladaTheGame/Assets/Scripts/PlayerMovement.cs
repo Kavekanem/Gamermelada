@@ -6,15 +6,14 @@ public class PlayerMovement : MonoBehaviour
 {
     //Components "attached"
     public GameObject Mesh = null;
-    public GameObject Camera = null;
-    public GameObject ParticleCamera = null;
     public GameObject Particles = null;
     public GameObject RenderCamera = null;
+    public GameObject Explosion = null;
+    public CameraMovement CameraMovement = null;
 
     private Vector3 MeshInitialOffset;
-    private Vector3 CameraInitialOffset;
-    private Vector3 ParticleCameraInitialOffset;
     private Vector3 ParticlesInitialOffset;
+    private Vector3 ExplosionInitialOffset;
 
     // Forward movement variables
     public float AccelerationForce = 0.0f;
@@ -45,12 +44,19 @@ public class PlayerMovement : MonoBehaviour
     public float RampBoostForce = 1.0f;
     private bool InRamp = false;
 
+    //Explosion variables
+    Vector3 InitialPos;
+    Quaternion InitialRot;
+
+
     void Start()
     {
+        InitialPos = transform.position;
+        InitialRot = transform.rotation;
+
         MeshInitialOffset = Mesh.transform.position - transform.position;
-        CameraInitialOffset = Camera.transform.position - transform.position;
-        ParticleCameraInitialOffset = ParticleCamera.transform.position - transform.position;
         ParticlesInitialOffset = Particles.transform.position - transform.position;
+        ExplosionInitialOffset = Explosion.transform.position - transform.position;
 
         PlaneInitialOffsetY = WaterPlane.transform.position.y - transform.position.y;
 
@@ -66,13 +72,12 @@ public class PlayerMovement : MonoBehaviour
             Mesh.transform.eulerAngles = new Vector3(Mesh.transform.eulerAngles.x, transform.eulerAngles.y + 180.0f, Mesh.transform.eulerAngles.z);
         }
 
-        Camera.transform.position = transform.position + CameraInitialOffset;
-        ParticleCamera.transform.position = transform.position + ParticleCameraInitialOffset;
         Particles.transform.position = transform.position + ParticlesInitialOffset;
 
         ParticleCamera.transform.rotation = transform.rotation;
 
         RenderCamera.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
+        Explosion.transform.position = transform.position + ExplosionInitialOffset;
     }
 
     void ForwardMovement()
@@ -163,23 +168,59 @@ public class PlayerMovement : MonoBehaviour
         OwnerRB.angularVelocity = Vector3.zero;
         OwnerRB.constraints = RigidbodyConstraints.None;
 
-        transform.forward = new Vector3(OwnerRB.velocity.x, 0.0f, OwnerRB.velocity.z);
+        if(!InWater)
+            transform.forward = new Vector3(OwnerRB.velocity.x, 0.0f, OwnerRB.velocity.z);
+    }
+
+    void AfterRespawn()
+    {
+        Particles.SetActive(true);
+        CameraMovement.Speed = 1.0f;
+    }
+
+    void Exploded()
+    {
+        transform.position = InitialPos;
+        transform.rotation = InitialRot;
+        Mesh.SetActive(true);
+        GetComponent<SphereCollider>().enabled = true;
+        GetComponent<Rigidbody>().isKinematic = false;
+
+        Invoke("AfterRespawn", 0.35f);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.layer == 9)
+        {
+            Explosion.GetComponent<Explosion>().Play();
+            Mesh.SetActive(false);
+            Particles.SetActive(false);
+            GetComponent<SphereCollider>().enabled = false;
+            GetComponent<Rigidbody>().isKinematic = true;
+            CameraMovement.Speed = 1.0f * Time.deltaTime;
+
+            Invoke("Exploded", 2.5f);
+
+            return;
+        }
+
         if (!InRamp)
         {
             InRamp = true;
             OwnerRB.angularVelocity = Vector3.zero;
             OwnerRB.constraints = RigidbodyConstraints.FreezeRotationY;
 
-            OwnerRB.velocity = -Mesh.transform.forward * RampBoostForce;
+            if(!InWater)
+                OwnerRB.velocity = -Mesh.transform.forward * RampBoostForce;
         }
         else
         {
             CancelInvoke("NotInRamp");
         }
+
+        if (!InWater)
+            Bounces = 0;
     }
 
     private void OnCollisionExit(Collision collision)
@@ -190,12 +231,12 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         UpdateChildTransfrom();
+        DirectionControl();
+        AirControl();
 
         if (!InRamp)
         {
-            DirectionControl();
             ForwardMovement();
-            AirControl();
         }
     }
 }
