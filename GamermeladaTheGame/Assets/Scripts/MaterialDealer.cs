@@ -28,8 +28,11 @@ public class MaterialDealer : MonoBehaviour
         if (component.object_counter < component.max_carryin_items && component != null)
         {
             component.carrying_objects[component.object_counter] = getItsMaterial();
-            if(component.object_counter != 0)
-                component.carrying_objects[component.object_counter].transform.position = component.carrying_objects[component.object_counter - 1].transform.position- component.carrying_objects[component.object_counter-1].transform.forward;
+            if (component.object_counter != 0)
+                component.carrying_objects[component.object_counter].transform.position = component.carrying_objects[component.object_counter - 1].transform.position - component.carrying_objects[component.object_counter - 1].transform.forward;
+            else
+                component.carrying_objects[component.object_counter].transform.position = component.gameObject.transform.position + component.gameObject.transform.forward;
+
             component.object_counter++;
         }
     }
