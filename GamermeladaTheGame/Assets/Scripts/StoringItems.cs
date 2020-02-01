@@ -43,23 +43,23 @@ public class StoringItems : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(own_rb.velocity.magnitude < 150.0f)
-        {
-
-            if(Input.GetKeyDown("w"))
-            {
-                own_rb.velocity += new Vector3(0f, 0f, -180.0f);
-            }
-            if (Input.GetKeyDown("a"))
-            {
-                own_rb.velocity += new Vector3(180.0f, 0f, 0f);
-            }
-            else if(Input.GetKeyDown("d"))
-            {
-                own_rb.velocity += new Vector3(-180.0f, 0f, 0f);
-
-            }
-        }
+        //if(own_rb.velocity.magnitude < 150.0f)
+        //{
+        //
+        //    if(Input.GetKeyDown("w"))
+        //    {
+        //        own_rb.velocity += new Vector3(0f, 0f, -180.0f);
+        //    }
+        //    if (Input.GetKeyDown("a"))
+        //    {
+        //        own_rb.velocity += new Vector3(180.0f, 0f, 0f);
+        //    }
+        //    else if(Input.GetKeyDown("d"))
+        //    {
+        //        own_rb.velocity += new Vector3(-180.0f, 0f, 0f);
+        //
+        //    }
+        //}
         //transform.position -= Vector3.Scale(transform.forward, new Vector3(1.0f, 1.0f, 1.0f));
         if (object_counter == 0)
             return;
@@ -71,10 +71,10 @@ public class StoringItems : MonoBehaviour
             Vector3 vec = carrying_objects[i - 1].transform.position - carrying_objects[i].transform.position;
             vec.Normalize();
             carrying_objects[i].transform.position = carrying_objects[i-1].transform.position - Vector3.Scale(vec, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f*extra_distance);
-            Rigidbody r = carrying_objects[i].GetComponent<Rigidbody>();
+            //Rigidbody r = carrying_objects[i].GetComponent<Rigidbody>();
 
-            if(r.velocity.magnitude < own_rb.velocity.magnitude)
-                r.velocity = r.velocity + Vector3.Scale(vec,own_rb.velocity);
+            //if(r.velocity.magnitude < own_rb.velocity.magnitude)
+            //    r.velocity = r.velocity + Vector3.Scale(vec,own_rb.velocity);
         }
     }
 
