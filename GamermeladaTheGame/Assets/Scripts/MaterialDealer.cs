@@ -33,6 +33,7 @@ public class MaterialDealer : MonoBehaviour
             else
                 component.carrying_objects[component.object_counter].transform.position = component.gameObject.transform.position + component.gameObject.transform.forward;
 
+            component.prev_pos[component.object_counter] = component.carrying_objects[component.object_counter].transform.position;
             component.object_counter++;
         }
     }
