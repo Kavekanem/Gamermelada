@@ -6,7 +6,7 @@ public class Indicators : MonoBehaviour
 {
     public GameObject[] indicators;
     public GameObject[] to_point;
-    GameObject player;
+    public GameObject player;
     Camera maincamera;
     // Start is called before the first frame update
     void Start()

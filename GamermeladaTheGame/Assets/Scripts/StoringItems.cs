@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StoringItems : MonoBehaviour
 {
@@ -21,6 +19,8 @@ public class StoringItems : MonoBehaviour
     void Start()
     {
         carrying_objects = new GameObject[max_carryin_items];
+        prev_pos = new Vector3[max_carryin_items];
+
         own_rb = gameObject.GetComponent<Rigidbody>();
 
     }
@@ -65,9 +65,9 @@ public class StoringItems : MonoBehaviour
         //transform.position -= Vector3.Scale(transform.forward, new Vector3(1.0f, 1.0f, 1.0f));
         if (object_counter == 0)
             return;
-        Vector3 vec1 = transform.position - carrying_objects[0].transform.position;
-        vec1.Normalize();
-        carrying_objects[0].transform.position = transform.position - Vector3.Scale(vec1, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f* extra_distance);
+        //Vector3 vec1 = transform.position - carrying_objects[0].transform.position;
+        //vec1.Normalize();
+        //carrying_objects[0].transform.position = transform.position - Vector3.Scale(vec1, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f* extra_distance);
         //for(int i = 1; i < object_counter; ++i)
         //{
         //    Vector3 vec = carrying_objects[i - 1].transform.position - carrying_objects[i].transform.position;
@@ -79,9 +79,15 @@ public class StoringItems : MonoBehaviour
         //    //    r.velocity = r.velocity + Vector3.Scale(vec,own_rb.velocity);
         //}
 
-        Vector3 acceleration = new Vector3(0f,0f,0f);
+        
+        Vector3 acceleration = new Vector3(1.8f,1.8f,1.8f);
 
-        for (int i = 0; i < object_counter; ++i)
+        Vector3 vec1 = transform.position - carrying_objects[0].transform.position;
+        vec1.Normalize();
+        carrying_objects[0].transform.position = transform.position - Vector3.Scale(vec1, (transform.lossyScale + carrying_objects[0].transform.lossyScale) * 0.5f * extra_distance*3.0f);
+
+
+        for (int i = 1; i < object_counter; ++i)
         {
            Vector3 newpos = 2.0f * (carrying_objects[i].transform.position) - prev_pos[i] + acceleration * Time.deltaTime * Time.deltaTime;
            prev_pos[i] = carrying_objects[i].transform.position;
@@ -89,35 +95,27 @@ public class StoringItems : MonoBehaviour
         }
 
 
-        for (int i = 1; i < object_counter; ++i)
-            carrying_objects[i].transform.position = Vector3.Min(Vector3.Max(carrying_objects[i].transform.position, new Vector3(15.0f, 15.0f, 15.0f)), new Vector3(extra_distance, extra_distance, extra_distance));
-
-
-        float imA1 = 1.0f / own_rb.mass;
-        float imB1 = 1.0f / carrying_objects[0].GetComponent<Rigidbody>().mass;
-
-        Vector3 posA1 = gameObject.transform.position;
-        Vector3 posB1 = carrying_objects[0].transform.position;
-        Vector3 deltapos1 = posB1 - posA1;
-        float deltalength1 = deltapos1.magnitude;
-        //check for whenever both particles are static, and avoid going to hell.
-        float difference1 = (deltalength1 - 1.0f) / (deltalength1 * ((imA1 + imB1) == 0 ? 0.0000001f : (imA1 + imB1)));
-        carrying_objects[0].transform.position -= deltapos1 * imB1 * difference1;
-
-        for (int i = 1; i < object_counter; ++i)
+        for (int j = 0; j < 30; ++j)
         {
-            float imA = 1.0f / carrying_objects[i - 1].GetComponent<Rigidbody>().mass;
-            float imB = 1.0f / carrying_objects[i].GetComponent<Rigidbody>().mass;
 
-            Vector3 posA = carrying_objects[i - 1].transform.position;
-            Vector3 posB = carrying_objects[i].transform.position;
-            Vector3 deltapos = posB - posA;
-            float deltalength = deltapos.magnitude;
-            //check for whenever both particles are static, and avoid going to hell.
-            float difference = (deltalength - 1.0f) / (deltalength * ((imA + imB) == 0 ? 0.0000001f : (imA + imB)));
-            carrying_objects[i - 1].transform.position += deltapos * imA * difference;
-            carrying_objects[i].transform.position -= deltapos * imB * difference;
+            for (int i = 1; i < object_counter; ++i)
+                carrying_objects[i].transform.position = Vector3.Min(Vector3.Max(carrying_objects[i].transform.position, carrying_objects[i-1].transform.position-new Vector3(extra_distance, extra_distance, extra_distance)), carrying_objects[i-1].transform.position + new Vector3(extra_distance, extra_distance, extra_distance));
 
+            for (int i = 1; i < object_counter; ++i)
+            {
+                float imA = 1.0f / carrying_objects[i - 1].GetComponent<Rigidbody>().mass;
+                float imB = 1.0f / carrying_objects[i].GetComponent<Rigidbody>().mass;
+
+                Vector3 posA = carrying_objects[i - 1].transform.position;
+                Vector3 posB = carrying_objects[i].transform.position;
+                Vector3 deltapos = posB - posA;
+                float deltalength = deltapos.magnitude;
+                //check for whenever both particles are static, and avoid going to hell.
+                float difference = (deltalength - extra_distance*0.5f) / (deltalength * ((imA + imB) < 0.001f ? 0.0000001f : (imA + imB)));
+                carrying_objects[i - 1].transform.position += deltapos * imA * difference;
+                carrying_objects[i].transform.position -= deltapos * imB * difference;
+
+            }
         }
     }
 
