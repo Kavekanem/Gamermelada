@@ -8,10 +8,15 @@ public class MaterialDealer : MonoBehaviour
     [HideInInspector]
     public bool deal_own = false;
 
+    public float dissapear_time = 5.0f;
+    float counter = 0f;
+
+    CapsuleCollider own_collider;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        own_collider = gameObject.GetComponent<CapsuleCollider>();
     }
 
     public GameObject getItsMaterial()
@@ -47,12 +52,23 @@ public class MaterialDealer : MonoBehaviour
 
 
             component.object_counter++;
+            own_collider.enabled = false;
+            material_to_deal.SetActive(false);
+            counter = 0f;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(counter < dissapear_time)
+        {
+            counter += Time.deltaTime;
+            return;
+        }
+        own_collider.enabled = true;
+        material_to_deal.SetActive(true);
+
+
     }
 }
