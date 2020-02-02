@@ -39,7 +39,6 @@ public class Pirates : MonoBehaviour
     void Start()
     {
         item_quantity = Random.Range(1, 6);
-
     }
 
     void ReloadMaterials()
@@ -94,6 +93,8 @@ public class Pirates : MonoBehaviour
             storboat.object_counter = 0;
             counter_sink = 0f;
             counter_float = 0f;
+            if (item_quantity < 0)
+                item_quantity = 0;
         }
     }
 
