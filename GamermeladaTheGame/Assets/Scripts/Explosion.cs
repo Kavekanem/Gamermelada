@@ -8,8 +8,13 @@ public class Explosion : MonoBehaviour
     public ParticleSystem Flash;
     public ParticleSystem[] Debris;
 
+    public AudioClip explosion_sound;
+    public AudioSource audio_component;
+
     public void Play()
     {
+        audio_component.PlayOneShot(explosion_sound);
+
         Main.Play();
         for (int i = 0; i < Ring.Length; i++)
             Ring[i].Play();

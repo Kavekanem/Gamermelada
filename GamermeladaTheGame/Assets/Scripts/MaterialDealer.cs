@@ -5,6 +5,10 @@ using UnityEngine;
 public class MaterialDealer : MonoBehaviour
 {
     public GameObject material_to_deal;
+
+    public AudioSource audio_player;
+
+    public static int current_audio = 0;
     [HideInInspector]
     public bool deal_own = false;
 
@@ -51,6 +55,8 @@ public class MaterialDealer : MonoBehaviour
             }
 
 
+            //audio_player.Play();
+        
             component.object_counter++;
             own_collider.enabled = false;
             material_to_deal.SetActive(false);

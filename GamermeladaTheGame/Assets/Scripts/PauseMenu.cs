@@ -11,7 +11,6 @@ public class PauseMenu : MonoBehaviour
     public GameObject resume_pause;
     public GameObject options;
     public GameObject exit_pause_menu;
-    public AudioSource mastervolume;
 
     public static float game_timescale = 1;
     public static bool is_paused = false;
@@ -20,7 +19,6 @@ public class PauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mastervolume.volume = PlayerPrefs.GetFloat("MasterVolume");
     }
 
     // Update is called once per frame

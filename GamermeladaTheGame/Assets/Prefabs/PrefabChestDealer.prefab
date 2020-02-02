@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material_to_deal: {fileID: 3207332396537395737}
+  audio_player: {fileID: 0}
   deal_own: 0
   dissapear_time: 25
 --- !u!136 &3207332396488694369

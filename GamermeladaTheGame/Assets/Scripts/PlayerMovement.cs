@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Explosion = null;
     public GameObject ParticleCamera = null;
     public GameObject ChestIndicator = null;
+    public GameObject BoatIndicator = null;
     public GameObject SplashPart = null;
     public CameraMovement CameraMovement = null;
 
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 ParticleCameraInitialOffset;
     private Vector3 SplashPartInitialOffset;
     private Vector3 ChestIndicatorInitialOffset;
+    private Vector3 BoatIndicatorInitialOffset;
 
     PlayerInput OwnerInput = null;
 
@@ -67,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
 
         ChestIndicatorInitialOffset = ChestIndicator.transform.position - transform.position;
 
+        BoatIndicatorInitialOffset = BoatIndicator.transform.position - transform.position;
+
         PlaneInitialOffsetY = WaterPlane.transform.position.y - transform.position.y;
 
         OwnerRB = GetComponent<Rigidbody>();
@@ -88,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         ParentParticles.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
         Explosion.transform.position = transform.position + ExplosionInitialOffset;
         ChestIndicator.transform.position = transform.position + ChestIndicatorInitialOffset;
+        BoatIndicator.transform.position = transform.position + BoatIndicatorInitialOffset;
 
         SplashPart.transform.position = transform.position + SplashPartInitialOffset;
     }
