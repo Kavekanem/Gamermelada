@@ -29,7 +29,7 @@ public class Pirates : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //item_quantity = Random.Range(1, 6);
+        item_quantity = Random.Range(1, 6);
 
     }
 
