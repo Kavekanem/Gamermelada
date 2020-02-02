@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7061616395748976387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7061616395749341987}
+  - component: {fileID: 7061616395745950467}
+  - component: {fileID: 7061616395747047875}
+  - component: {fileID: 7061616396481879196}
+  - component: {fileID: 7061616396481879197}
+  m_Layer: 0
+  m_Name: ship_wreck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7061616395749341987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061616395748976387}
+  m_LocalRotation: {x: -0, y: -0.72536033, z: -0, w: -0.6883694}
+  m_LocalPosition: {x: -114, y: -7, z: -205}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -267.002, z: 0}
+--- !u!33 &7061616395745950467
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061616395748976387}
+  m_Mesh: {fileID: 4300000, guid: 2831ac6a9d2b65c4aa6467d68de60247, type: 3}
+--- !u!23 &7061616395747047875
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061616395748976387}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 8a13a717af9ff9841ba1ccad78590cad, type: 2}
+  - {fileID: 2100000, guid: 96a0f83923961714ca99abb2b57b2070, type: 2}
+  - {fileID: 2100000, guid: 7150796d7a63a2242be83540246b5fad, type: 2}
+  - {fileID: 2100000, guid: 5c7c7977c86c28b4d9536f25e6757ac3, type: 2}
+  - {fileID: 2100000, guid: ff7ab1fc13c26c34bab125ec554e0dcd, type: 2}
+  - {fileID: 2100000, guid: 2a680876e020f25479a004257e1cbdaf, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!136 &7061616396481879196
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061616395748976387}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 45
+  m_Height: 300
+  m_Direction: 1
+  m_Center: {x: 35, y: 50, z: 15}
+--- !u!114 &7061616396481879197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061616395748976387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605803f6cc5d4074bb971add32fb5d6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boat_correct: {fileID: 4300000, guid: d4e11b9e630d2ed41bef099db564e5b4, type: 3}
+  boat_destroyed: {fileID: 4300000, guid: 2831ac6a9d2b65c4aa6467d68de60247, type: 3}
+  collision: {fileID: 7061616396481879196}
+  collide: {fileID: 0}
+  sink_speed: 15
+  flying_dutchman_sink_time: 5
+  flying_dutchman_float_time: 5
+  item_quantity: 0

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Pirates : MonoBehaviour
 {
-    [HideInInspector]
-    public enum MATERIALS { PADEL = 0, SHOVEL = 1, SWORD = 2, CHEST = 3, CANNON = 4, RUM =5};
-
-    MATERIALS[] asked;
+    //[HideInInspector]
+    //public enum MATERIALS { PADEL = 0, SHOVEL = 1, SWORD = 2, CHEST = 3, CANNON = 4, RUM =5};
+    //
+    //MATERIALS[] asked;
 
     public Mesh boat_correct;
     public Mesh boat_destroyed;
@@ -17,7 +17,7 @@ public class Pirates : MonoBehaviour
 
     public float sink_speed = 1.0f;
 
-    float rotation = 30.0f;
+    //float rotation = 30.0f;
     public float flying_dutchman_sink_time = 3.0f;
     public float flying_dutchman_float_time = 3.0f;
 
@@ -62,7 +62,6 @@ public class Pirates : MonoBehaviour
 
     public void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("Boat blocked");
         if (collider == collide)
         {
             StoringItems storboat = collider.gameObject.GetComponent<StoringItems>();
