@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pirates : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class Pirates : MonoBehaviour
     float counter_float = 0f;
 
     public int item_quantity = 0;
+
+    public Text textbox;
 
     // Start is called before the first frame update
     void Start()
@@ -80,6 +83,8 @@ public class Pirates : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        textbox.text = item_quantity.ToString();
+
         if(item_quantity <= 0)
         {
             ReloadMaterials();
