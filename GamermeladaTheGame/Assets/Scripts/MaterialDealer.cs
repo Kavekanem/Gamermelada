@@ -13,6 +13,11 @@ public class MaterialDealer : MonoBehaviour
 
     CapsuleCollider own_collider;
 
+    float counter_anim = 0f;
+    public float dist = 15.0f;
+    public float speed = 3.0f;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,14 +66,20 @@ public class MaterialDealer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(counter < dissapear_time)
+        if (counter_anim >= 2.0f*Mathf.PI)
+            counter_anim = 0f;
+
+
+        material_to_deal.transform.position += material_to_deal.transform.up * Mathf.Sin(counter_anim)*Time.deltaTime*dist;
+        counter_anim += speed*Time.deltaTime;
+
+
+        if (counter < dissapear_time)
         {
             counter += Time.deltaTime;
             return;
         }
         own_collider.enabled = true;
         material_to_deal.SetActive(true);
-
-
     }
 }
