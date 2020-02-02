@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject ParentParticles = null;
     public GameObject Explosion = null;
     public GameObject ParticleCamera = null;
+    public GameObject ChestIndicator = null;
     public CameraMovement CameraMovement = null;
 
 
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 ParticlesInitialOffset;
     private Vector3 ExplosionInitialOffset;
     private Vector3 ParticleCameraInitialOffset;
+    private Vector3 ChestIndicatorInitialOffset;
 
     // Forward movement variables
     public float AccelerationForce = 0.0f;
@@ -62,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         ExplosionInitialOffset = Explosion.transform.position - transform.position;
         ParticleCameraInitialOffset = ParticleCamera.transform.position - transform.position;
 
+        ChestIndicatorInitialOffset = ChestIndicator.transform.position - transform.position;
+
         PlaneInitialOffsetY = WaterPlane.transform.position.y - transform.position.y;
 
         OwnerRB = GetComponent<Rigidbody>();
@@ -85,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
         ParentParticles.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
         Explosion.transform.position = transform.position + ExplosionInitialOffset;
+        ChestIndicator.transform.position = transform.position + ChestIndicatorInitialOffset;
     }
 
     void ForwardMovement()
