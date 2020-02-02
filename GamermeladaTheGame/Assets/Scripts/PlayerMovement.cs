@@ -22,15 +22,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 SplashPartInitialOffset;
     private Vector3 ChestIndicatorInitialOffset;
 
+    PlayerInput OwnerInput = null;
+
     // Forward movement variables
     public float AccelerationForce = 0.0f;
     public float MaxSpeed = 0.0f;
 
     private Rigidbody OwnerRB = null;
-
-    // Direction control variables
-    public KeyCode RightKey = KeyCode.A;
-    public KeyCode LeftKey = KeyCode.D;
 
     public float RotationRate = 1.0f;
     public float MaxRotationSpeed = 2.0f;
@@ -49,12 +47,12 @@ public class PlayerMovement : MonoBehaviour
 
     //Ramp Variables
     public float RampBoostForce = 1.0f;
-    private bool InRamp = false;
+    [HideInInspector]
+    public bool InRamp = false;
 
     //Explosion variables
     Vector3 InitialPos;
     Quaternion InitialRot;
-
 
     void Start()
     {
@@ -72,23 +70,19 @@ public class PlayerMovement : MonoBehaviour
         PlaneInitialOffsetY = WaterPlane.transform.position.y - transform.position.y;
 
         OwnerRB = GetComponent<Rigidbody>();
+        OwnerInput = GetComponent<PlayerInput>();
     }
 
     void UpdateChildTransfrom()
     {
         Mesh.transform.position = transform.position + MeshInitialOffset;
-
+        
         if(!InRamp)
         {
             Mesh.transform.eulerAngles = new Vector3(Mesh.transform.eulerAngles.x, transform.eulerAngles.y + 180.0f, Mesh.transform.eulerAngles.z);
         }
 
         ParticleCamera.transform.position = transform.position + ParticleCameraInitialOffset;
-        
-        //Particles.transform.position = transform.position + ParticlesInitialOffset;
-
-        //Particles.transform.position = transform.position + ParticlesInitialOffset;
-
         ParticleCamera.transform.rotation = transform.rotation;
 
         ParentParticles.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
@@ -118,8 +112,8 @@ public class PlayerMovement : MonoBehaviour
 
     void DirectionControl()
     {
-        bool RightKeyDown = Input.GetKey(RightKey);
-        bool LeftKeyDown = Input.GetKey(LeftKey);
+        bool RightKeyDown = OwnerInput.Right;
+        bool LeftKeyDown = OwnerInput.Left;
 
         if (RightKeyDown && LeftKeyDown){}
         else if(RightKeyDown)
@@ -201,10 +195,9 @@ public class PlayerMovement : MonoBehaviour
             transform.forward = new Vector3(OwnerRB.velocity.x, 0.0f, OwnerRB.velocity.z);
     }
 
-    void AfterRespawn()
+    void ReactivateParticles()
     {
         Particles.SetActive(true);
-        CameraMovement.Speed = 1.0f;
     }
 
     void Exploded()
@@ -215,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<SphereCollider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
 
-        Invoke("AfterRespawn", 0.35f);
+        Invoke("ReactivateParticles", 0.5f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -227,7 +220,6 @@ public class PlayerMovement : MonoBehaviour
             Particles.SetActive(false);
             GetComponent<SphereCollider>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
-            CameraMovement.Speed = 1.0f * Time.deltaTime;
 
             Invoke("Exploded", 2.5f);
 
@@ -259,6 +251,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (Equals(PauseMenu.game_timescale, 0.0f))
+            return;
+
         UpdateChildTransfrom();
         DirectionControl();
         AirControl();

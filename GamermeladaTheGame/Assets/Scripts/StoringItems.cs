@@ -5,8 +5,6 @@ public class StoringItems : MonoBehaviour
     public GameObject deliveringpoint;
     [HideInInspector]
     public GameObject[] carrying_objects;
-    [HideInInspector]
-    public SpringJoint[] prev_pos;
 
     [HideInInspector]
     public int max_carryin_items = 8;
@@ -22,8 +20,6 @@ public class StoringItems : MonoBehaviour
     void Start()
     {
         carrying_objects = new GameObject[max_carryin_items];
-        prev_pos = new SpringJoint[max_carryin_items];
-
         own_rb = gameObject.GetComponent<Rigidbody>();
 
     }
@@ -31,11 +27,22 @@ public class StoringItems : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-       for(int i = 0; i < object_counter; ++i)
+       if(collision.gameObject == deliveringpoint)
        {
-            GameObject.Destroy(carrying_objects[i]);
+            object_counter = 0;
+
+            return;
        }
-       object_counter = 0;
+
+       if(!gameObject.GetComponent<PlayerMovement>().InRamp)
+        {
+
+            for(int i = 0; i < object_counter; ++i)
+            {
+                 GameObject.Destroy(carrying_objects[i]);
+            }
+            object_counter = 0;
+        }
     }
 
     public void leaveitem(GameObject obj)
