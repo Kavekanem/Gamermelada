@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Explosion = null;
     public GameObject ParticleCamera = null;
     public GameObject ChestIndicator = null;
+    public GameObject BoatIndicator = null;
+    public GameObject SplashPart = null;
     public CameraMovement CameraMovement = null;
 
 
@@ -18,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 ParticlesInitialOffset;
     private Vector3 ExplosionInitialOffset;
     private Vector3 ParticleCameraInitialOffset;
+    private Vector3 SplashPartInitialOffset;
     private Vector3 ChestIndicatorInitialOffset;
+    private Vector3 BoatIndicatorInitialOffset;
 
     PlayerInput OwnerInput = null;
 
@@ -61,8 +65,11 @@ public class PlayerMovement : MonoBehaviour
         ParticlesInitialOffset = Particles.transform.position - transform.position;
         ExplosionInitialOffset = Explosion.transform.position - transform.position;
         ParticleCameraInitialOffset = ParticleCamera.transform.position - transform.position;
+        SplashPartInitialOffset = SplashPart.transform.position - transform.position;
 
         ChestIndicatorInitialOffset = ChestIndicator.transform.position - transform.position;
+
+        BoatIndicatorInitialOffset = BoatIndicator.transform.position - transform.position;
 
         PlaneInitialOffsetY = WaterPlane.transform.position.y - transform.position.y;
 
@@ -85,6 +92,9 @@ public class PlayerMovement : MonoBehaviour
         ParentParticles.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
         Explosion.transform.position = transform.position + ExplosionInitialOffset;
         ChestIndicator.transform.position = transform.position + ChestIndicatorInitialOffset;
+        BoatIndicator.transform.position = transform.position + BoatIndicatorInitialOffset;
+
+        SplashPart.transform.position = transform.position + SplashPartInitialOffset;
     }
 
     void ForwardMovement()
@@ -127,6 +137,14 @@ public class PlayerMovement : MonoBehaviour
         OwnerRB.angularVelocity = new Vector3(OwnerRB.angularVelocity.x, Mathf.Clamp(OwnerRB.angularVelocity.y, -MaxRotationSpeed, MaxRotationSpeed), OwnerRB.angularVelocity.z);
     }
 
+    void SplashParticlesActivate(float SizeRatio)
+    {
+        ParticleSystem ps = SplashPart.GetComponentInChildren<ParticleSystem>();
+        var main = ps.main;  
+        main.startSizeMultiplier = SizeRatio;
+        ps.Play();
+    }
+
     void AirControl()
     {
         float PlaneOffsetY = WaterPlane.transform.position.y - transform.position.y;
@@ -136,7 +154,10 @@ public class PlayerMovement : MonoBehaviour
             InWater = true;
 
             if(InAir)
+            {
                 Bounces++;
+                SplashParticlesActivate((1.0f / Bounces) * 150.0f);
+            }                
         }
         else
             InWater = false;
