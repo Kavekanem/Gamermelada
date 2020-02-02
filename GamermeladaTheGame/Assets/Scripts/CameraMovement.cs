@@ -17,7 +17,6 @@ public class CameraMovement : MonoBehaviour
             Vector3 CameraXZ = new Vector3(transform.position.x, 0.0f, transform.position.z);
 
             InitialOffset = CameraXZ - PlayerXZ;
-            print(InitialOffset);
         }
     }
 

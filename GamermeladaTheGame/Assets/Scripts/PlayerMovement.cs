@@ -20,15 +20,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 ParticleCameraInitialOffset;
     private Vector3 ChestIndicatorInitialOffset;
 
+    PlayerInput OwnerInput = null;
+
     // Forward movement variables
     public float AccelerationForce = 0.0f;
     public float MaxSpeed = 0.0f;
 
     private Rigidbody OwnerRB = null;
-
-    // Direction control variables
-    public KeyCode RightKey = KeyCode.A;
-    public KeyCode LeftKey = KeyCode.D;
 
     public float RotationRate = 1.0f;
     public float MaxRotationSpeed = 2.0f;
@@ -69,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
         PlaneInitialOffsetY = WaterPlane.transform.position.y - transform.position.y;
 
         OwnerRB = GetComponent<Rigidbody>();
+        OwnerInput = GetComponent<PlayerInput>();
     }
 
     void UpdateChildTransfrom()
@@ -108,8 +107,8 @@ public class PlayerMovement : MonoBehaviour
 
     void DirectionControl()
     {
-        bool RightKeyDown = Input.GetKey(RightKey);
-        bool LeftKeyDown = Input.GetKey(LeftKey);
+        bool RightKeyDown = OwnerInput.Right;
+        bool LeftKeyDown = OwnerInput.Left;
 
         if (RightKeyDown && LeftKeyDown){}
         else if(RightKeyDown)
