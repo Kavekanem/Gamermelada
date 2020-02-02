@@ -45,7 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
     //Ramp Variables
     public float RampBoostForce = 1.0f;
-    private bool InRamp = false;
+    [HideInInspector]
+    public bool InRamp = false;
 
     //Explosion variables
     Vector3 InitialPos;
