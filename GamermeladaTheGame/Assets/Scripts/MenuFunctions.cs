@@ -11,7 +11,7 @@ public class MenuFunctions : MonoBehaviour
     public GameObject resolutions;
     public AudioSource mastervolume;
 
-    public string init_level = "";
+    public string init_level = "Isle";
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class MenuFunctions : MonoBehaviour
 
     public void InitLevel()
     {
-
+        SceneManager.LoadScene(init_level);
     }
 
     public void Options()

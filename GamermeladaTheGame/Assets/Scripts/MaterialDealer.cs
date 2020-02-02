@@ -5,6 +5,11 @@ using UnityEngine;
 public class MaterialDealer : MonoBehaviour
 {
     public GameObject material_to_deal;
+
+    public AudioClip[] collisionSounds;
+    public AudioSource audio_player;
+
+    public static int current_audio = 0;
     [HideInInspector]
     public bool deal_own = false;
 
@@ -55,7 +60,15 @@ public class MaterialDealer : MonoBehaviour
                 //component.carrying_objects[component.object_counter].GetComponent<SpringJoint>().connectedBody = component.own_rb;
             }
 
+            AudioClip sound = collisionSounds[current_audio];
 
+            audio_player.PlayOneShot(sound);
+
+            current_audio++;
+            if (current_audio >= collisionSounds.Length)
+                current_audio = 0;
+
+          
             component.object_counter++;
             own_collider.enabled = false;
             material_to_deal.SetActive(false);
