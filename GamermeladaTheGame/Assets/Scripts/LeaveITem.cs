@@ -14,7 +14,7 @@ public class LeaveITem : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        belong.leaveitem(this.gameObject);
+       // belong.leaveitem(this.gameObject);
     }
 
     // Update is called once per frame
