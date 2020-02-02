@@ -31,7 +31,11 @@ public class StoringItems : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-       //object_counter = 0;
+       for(int i = 0; i < object_counter; ++i)
+       {
+            GameObject.Destroy(carrying_objects[i]);
+       }
+       object_counter = 0;
     }
 
     public void leaveitem(GameObject obj)
