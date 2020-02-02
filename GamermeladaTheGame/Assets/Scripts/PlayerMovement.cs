@@ -54,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 InitialPos;
     Quaternion InitialRot;
 
-
     void Start()
     {
         InitialPos = transform.position;
@@ -75,17 +74,13 @@ public class PlayerMovement : MonoBehaviour
     void UpdateChildTransfrom()
     {
         Mesh.transform.position = transform.position + MeshInitialOffset;
-
+        
         if(!InRamp)
         {
             Mesh.transform.eulerAngles = new Vector3(Mesh.transform.eulerAngles.x, transform.eulerAngles.y + 180.0f, Mesh.transform.eulerAngles.z);
         }
 
         ParticleCamera.transform.position = transform.position + ParticleCameraInitialOffset;
-        //Particles.transform.position = transform.position + ParticlesInitialOffset;
-
-        //Particles.transform.position = transform.position + ParticlesInitialOffset;
-
         ParticleCamera.transform.rotation = transform.rotation;
 
         ParentParticles.transform.position = new Vector3(Mesh.transform.position.x, 110.0f, Mesh.transform.position.z);
@@ -185,10 +180,9 @@ public class PlayerMovement : MonoBehaviour
             transform.forward = new Vector3(OwnerRB.velocity.x, 0.0f, OwnerRB.velocity.z);
     }
 
-    void AfterRespawn()
+    void ReactivateParticles()
     {
         Particles.SetActive(true);
-        CameraMovement.Speed = 1.0f;
     }
 
     void Exploded()
@@ -199,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<SphereCollider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
 
-        Invoke("AfterRespawn", 0.35f);
+        Invoke("ReactivateParticles", 0.5f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -211,7 +205,6 @@ public class PlayerMovement : MonoBehaviour
             Particles.SetActive(false);
             GetComponent<SphereCollider>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
-            CameraMovement.Speed = 1.0f * Time.deltaTime;
 
             Invoke("Exploded", 2.5f);
 
@@ -243,6 +236,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (Equals(PauseMenu.game_timescale, 0.0f))
+            return;
+
         UpdateChildTransfrom();
         DirectionControl();
         AirControl();
