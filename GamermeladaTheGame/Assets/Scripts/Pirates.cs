@@ -21,26 +21,43 @@ public class Pirates : MonoBehaviour
     //float rotation = 30.0f;
     public float flying_dutchman_sink_time = 3.0f;
     public float flying_dutchman_float_time = 3.0f;
+    public float sm_time = 3.0f;
 
     float counter_sink = 0f;
     float counter_float = 0f;
+    float smoke_timer = 0f;
+
 
     public int item_quantity = 0;
 
     public Text textbox;
 
+    public GameObject smoke_white;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        item_quantity = Random.Range(1, 6);
+        //item_quantity = Random.Range(1, 6);
 
     }
 
     void ReloadMaterials()
     {
         MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-
         mf.mesh = boat_correct;
+
+        if(smoke_timer < sm_time)
+        {
+            if(smoke_timer <= 0.001f)
+            {
+                smoke_white.GetComponent<Explosion>().Play();
+            }
+
+            smoke_timer += Time.deltaTime;
+            return;
+        }
+
         collision.enabled = false;
 
         if (counter_sink < flying_dutchman_sink_time)
